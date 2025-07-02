@@ -7,21 +7,22 @@
     <artifactId>example-maven-project</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jaxb.version>2.3.1</jaxb.version>
+        <jakarta.jaxb.version>4.0.2</jakarta.jaxb.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>${jaxb.version}</version>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${jakarta.jaxb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>${jaxb.version}</version>
+            <version>${jakarta.jaxb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -31,12 +32,25 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>2.5.0</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
@@ -44,8 +58,13 @@
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
+                            <schemaDirectory>src/main/xsd</schemaDirectory>
+                            <schemas>
+                                <schema>example.xsd</schema>
+                            </schemas>
                             <outputDirectory>src/main/java</outputDirectory>
-                            <clearOutputDir>false</clearOutputDir>
+                            <clearOutputDir>true</clearOutputDir>
+                            <forceJakartaNamespace>true</forceJakartaNamespace>
                         </configuration>
                     </execution>
                 </executions>
