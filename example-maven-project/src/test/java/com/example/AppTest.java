@@ -1,14 +1,23 @@
+package com.example;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 class AppTest {
 
     @Test
     void testMain() {
-        // Here you would typically set up the test environment and call the main method of App
-        // For example, you might want to check if the application runs without exceptions
-        assertDoesNotThrow(() -> App.main(new String[] {}));
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+        try {
+            assertDoesNotThrow(() -> App.main(new String[] {}));
+            String output = outContent.toString();
+            assertTrue(output.contains("Alice")); // or any expected XML content
+        } finally {
+            System.setOut(originalOut);
+        }
     }
-
-    // Additional tests can be added here to validate XML marshalling functionality
 }
