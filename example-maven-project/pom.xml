@@ -56,13 +56,11 @@
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
-                            <schemaDirectory>src/main/xsd</schemaDirectory>
-                            <schemas>
-                                <schema>example.xsd</schema>
-                            </schemas>
+                            <sources>
+                                <source>src/main/resources/xsd/</source>
+                            </sources>
                             <outputDirectory>target/classes/generated-sources/xjc</outputDirectory>
                             <clearOutputDir>true</clearOutputDir>
-                            <forceJakartaNamespace>true</forceJakartaNamespace>
                         </configuration>
                     </execution>
                 </executions>
